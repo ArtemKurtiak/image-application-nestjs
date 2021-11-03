@@ -14,7 +14,8 @@ export class ImageService {
   constructor(
     @InjectModel(Image.name) private imageModel: Model<ImageDocument>,
     @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
-    private fileService: FileService) {}
+    private fileService: FileService) {
+  }
 
   async createImage(dto: CreateImageDto, picture: string): Promise<Image> {
     const fileName = await this.fileService.createFile(picture);
@@ -31,13 +32,20 @@ export class ImageService {
   }
 
   async getImageById(id: Schema.Types.ObjectId): Promise<Image | null> {
-    const image = await this.imageModel.findById(id).populate('comments');
+    const image = await this.imageModel.findById(id).populate({
+      path: 'user',
+    }).populate({
+      path: 'comments',
+      populate: {
+        path: 'user'
+      }
+    });
 
     return image;
   }
 
   async deleteImage(id: Schema.Types.ObjectId): Promise<void> {
-    await this.imageModel.deleteOne({ _id: id })
+    await this.imageModel.deleteOne({ _id: id });
   }
 
   async addComment(dto: CreateCommentDto): Promise<Comment> {
@@ -45,9 +53,11 @@ export class ImageService {
 
     const comment = await this.commentModel.create({ ...dto });
 
-    await this.imageModel.findByIdAndUpdate(image, { $push: {
-      comments: [comment._id]
-      }})
+    await this.imageModel.findByIdAndUpdate(image, {
+      $push: {
+        comments: [comment._id]
+      }
+    });
 
     return comment;
   }

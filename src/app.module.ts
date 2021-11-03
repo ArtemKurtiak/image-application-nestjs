@@ -7,6 +7,7 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { ImageModule } from "./images/image.module";
 import { FileModule } from "./file/file.module";
+import { UserModule } from "./user/user.module";
 
 @Module({
   controllers: [AppController],
@@ -17,6 +18,7 @@ import { FileModule } from "./file/file.module";
     }),
     ImageModule,
     FileModule,
+    UserModule,
     MongooseModule.forRoot('mongodb://localhost:27017/images-app'),
   ]
 })

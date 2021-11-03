@@ -3,11 +3,10 @@ import { MongooseModule } from "@nestjs/mongoose";
 
 import { ImageController } from "./image.controller";
 import { ImageService } from "./image.service";
-import { Image } from './schemas/image.schema';
-import { Comment } from './schemas/comment.schema';
-import { ImageSchema } from "./schemas/image.schema";
-import { CommentSchema } from "./schemas/comment.schema";
+import { Image, ImageSchema } from "./schemas/image.schema";
+import { Comment, CommentSchema } from "./schemas/comment.schema";
 import { FileService } from "../file/file.service";
+import { User, UserSchema } from "../user/schemas/User.schema";
 
 @Module({
   controllers: [ImageController],
@@ -15,10 +14,10 @@ import { FileService } from "../file/file.service";
   imports: [
     MongooseModule.forFeature([
       { name: Image.name, schema: ImageSchema },
-      { name: Comment.name, schema: CommentSchema }
+      { name: Comment.name, schema: CommentSchema },
+      { name: User.name, schema: UserSchema }
     ]),
   ]
 })
 export class ImageModule {
-
 }

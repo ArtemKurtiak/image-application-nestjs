@@ -15,7 +15,7 @@ export class Image {
   @Prop({ default: '' })
   url: string;
 
-  @Prop({})
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: string
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }] })
