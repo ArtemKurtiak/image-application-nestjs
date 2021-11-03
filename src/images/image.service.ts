@@ -61,4 +61,10 @@ export class ImageService {
 
     return comment;
   }
+
+  async getLimitImages(limit: number): Promise<Image[]> {
+    const images = await this.imageModel.find({}).limit(limit);
+
+    return images;
+  }
 }
