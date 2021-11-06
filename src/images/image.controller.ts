@@ -18,6 +18,7 @@ import { FileFieldsInterceptor } from "@nestjs/platform-express";
 import { checkUserExistsInterceptor } from "./interceptors/check-user-exists.interceptor";
 import { checkImageExistsInterceptor } from "./interceptors/check-image-exists.interceptor";
 import { CorrectDescriptionPipe } from "./pipes/correct-description.pipe";
+import { CustomParam } from "../user/decorators/custom-param.decorator";
 
 @Controller("/api/images")
 export class ImageController {
@@ -42,7 +43,7 @@ export class ImageController {
   }
 
   @Get("/:image_id")
-  getImageById(@Param("image_id") image_id: mongoose.Schema.Types.ObjectId) {
+  getImageById(@CustomParam("image_id") image_id: mongoose.Schema.Types.ObjectId) {
     return this.imageService.getImageById(image_id);
   }
 
